@@ -1,0 +1,25 @@
+Script Breakdown:
+1. Configuration:
+	- Set variables for remote server details, deployment paths, Git repository URL, and virtual environment directory.
+2. Deploy Task:
+	- Connect to the Remote Server: Using Fabric’s Connection class.
+	- Ensure Deployment Directory Exists: Create the directory if it doesn’t exist.
+	- Clone or Pull the Repository: Check if the repository is already cloned and pull the latest changes or clone it if it’s not.
+	- Setup Virtual Environment: Create a Python virtual environment and install dependencies.
+	- Restart Web Server: Restart the web server (e.g., Gunicorn) to apply changes.
+3. Setup Task:
+	- Install Necessary Packages: Install Python packages and Git if not already present.
+	- Setup Deployment Environment: Create necessary directories and clone the repository.
+
+Key Concepts Demonstrated:
+	- Server Automation: Automating tasks on remote servers.
+	- Deployment Automation: Handling the deployment of code and application setup.
+	- Fabric Usage: Using Fabric to interact with remote servers and execute commands.
+	- Virtual Environment Management: Setting up a Python virtual environment on the remote server.
+
+How to Use:
+1. Replace placeholders (your-server-ip, your-ssh-username, etc.) with your actual server details and paths.
+2. Ensure Fabric is installed on your local machine (pip install fabric).
+3. Run the script using Fabric commands in your terminal:
+	- 'fab setup' to set up the remote server environment.
+	- 'fab deploy' to deploy the application.
