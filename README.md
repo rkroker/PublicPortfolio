@@ -15,8 +15,10 @@ Programming Languages:
 - Python
 - R
 - JavaScript
+- jQuery
+- AngularJS
 
-Frameworks/Libraries: 
+Python Frameworks/Libraries: 
 - Panda
 - NumPy
 - Matplotlib
