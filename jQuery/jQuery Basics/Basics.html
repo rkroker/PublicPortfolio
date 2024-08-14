@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Basic jQuery Example</title>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+</head>
+<body>
+    <h1>jQuery Basic Demonstration</h1>
+    <p id="text">Clicking the button below will change this text.</p>
+    <button id="changeText">Change Text</button>
+
+    <script>
+        // Wait for the DOM to be ready
+        $(document).ready(function() {
+            // Attach a click event to the button
+            $('#changeText').click(function() {
+                // Change the text of the paragraph
+                $('#text').text('Thank you for observing this basic example of jQuery!');
+            });
+        });
+    </script>
+</body>
+</html>

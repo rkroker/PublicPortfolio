@@ -1,0 +1,2 @@
+What This Script Does:
+The script starts by including the jQuery library using a CDN link. The $(document).ready() function ensures that the script runs only after the DOM is fully loaded. It listens for a click event on the button with the ID #changeText. When the button is clicked, the text of the paragraph with the ID #text is changed to "The text has been changed!".

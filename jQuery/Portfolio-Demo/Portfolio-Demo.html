@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Portfolio</title>
+    <style>
+        body { font-family: Arial, sans-serif; }
+        .portfolio-item { display: none; margin: 10px 0; padding: 15px; border: 1px solid #ccc; }
+        .portfolio-item h3 { margin: 0 0 10px; }
+        .filters { margin-bottom: 20px; }
+        .details { display: none; margin-top: 20px; padding: 15px; border: 1px solid #ccc; background-color: #f9f9f9; }
+    </style>
+</head>
+<body>
+
+<div class="filters">
+    <button data-filter="all">All</button>
+    <button data-filter="web">Web Development</button>
+    <button data-filter="design">Design</button>
+    <button data-filter="other">Other</button>
+</div>
+
+<div class="portfolio">
+    <div class="portfolio-item" data-category="web">
+        <h3>Web Project 1</h3>
+        <button class="view-details" data-id="1">View Details</button>
+    </div>
+    <div class="portfolio-item" data-category="design">
+        <h3>Design Project</h3>
+        <button class="view-details" data-id="2">View Details</button>
+    </div>
+    <div class="portfolio-item" data-category="web">
+        <h3>Web Project 2</h3>
+        <button class="view-details" data-id="3">View Details</button>
+    </div>
+    <div class="portfolio-item" data-category="other">
+        <h3>Other Project</h3>
+        <button class="view-details" data-id="4">View Details</button>
+    </div>
+</div>
+
+<div class="details"></div>
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+    $(document).ready(function() {
+        // Show all items by default
+        $('.portfolio-item').fadeIn();
+
+        // Filter portfolio items based on category
+        $('.filters button').click(function() {
+            var filter = $(this).attr('data-filter');
+            if (filter === 'all') {
+                $('.portfolio-item').fadeIn();
+            } else {
+                $('.portfolio-item').hide();
+                $('.portfolio-item[data-category="' + filter + '"]').fadeIn();
+            }
+        });
+
+        // Dummy data for project details
+        var projectDetails = {
+            1: { title: "Web Project 1", description: "This is a generic Web Project. The category is [data-category = web] which is how the filter operation identifies the type of project." },
+            2: { title: "Design Project", description: "This is a generic Design Project. The category is [data-category = design] which is how the filter operation identifies the type of project." },
+            3: { title: "Web Project 2", description: "This is a second generic Web Project. The category is [data-category = web] which is how the filter operation identifies the type of project." },
+            4: { title: "Other Project", description: "This is a generic Other Project. The category is [data-category = other] which is how the filter operation identifies the type of project." }
+        };
+
+        // Handle view details click
+            $('.view-details').click(function() {
+                var $this = $(this);
+                var $details = $('.details');
+                var projectId = $this.data('id');
+                var details = projectDetails[projectId];
+
+                if ($this.text() === "View Details") {
+                // Show details
+                $details.html('<h3>' + details.title + '</h3><p>' + details.description + '</p>').fadeIn();
+                $this.text("Hide Details");
+                } else {
+                // Hide details
+                $details.fadeOut();
+                $this.text("View Details");
+                }
+
+            // Scroll to the details section
+            $('html, body').animate({
+                scrollTop: $(".details").offset().top
+            }, 500);
+
+            // Add click event listener to the details section to hide it
+            $('.details').on('click', function() {
+                $(this).fadeOut();
+             });
+        });
+    });
+</script>
+
+</body>
+</html>

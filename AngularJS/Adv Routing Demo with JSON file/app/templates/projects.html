@@ -1,0 +1,10 @@
+<div class="projects">
+    <h2>Projects</h2>
+    <h3>Hardcoded projects are objects hardcoded directly into the controller.</h3>
+    <h3>JSON projects are objects defined in a seperate JSON file (projects.json)</h3>
+    <div ng-repeat="project in projects">
+        <!--<div ng-include="'app/templates/project-card.html'"></div>-->
+        <project-card project="project"></project-card>
+        
+    </div>
+</div>
