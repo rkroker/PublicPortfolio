@@ -1,13 +1,13 @@
 # Certifications and Capstones
 
-This section contains selected artifacts from certificate programs and capstone projects.
+## Focus
+This directory highlights selected work completed through technical certificate programs and capstone projects.
 
-## What is included
+## Content
+It contains project artifacts, notebooks, dashboards, and other deliverables tied to structured learning and final project work.
 
-- capstone notebooks
-- dashboard artifacts
-- course completion project outputs
+## Tools I used
+Python, Jupyter Notebook, SQL, Tableau, and other tools depending on the program and project.
 
-## Notes
-
-These materials reflect structured project work completed through formal learning programs.
+## Takeaways
+These projects helped strengthen my foundation in analytics, data workflows, and project-based technical execution.

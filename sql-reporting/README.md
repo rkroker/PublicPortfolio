@@ -1,14 +1,16 @@
 # SQL Reporting
 
-This section contains selected SQL examples related to reporting, student information workflows, and operational data analysis.
+## Focus
+This directory focuses on SQL work related to reporting, data extraction, and operational visibility.
 
-## What is included
+## Contents
+It contains selected SQL queries and reporting examples tied to student information, workflows, and practical reporting needs.
 
-- Reporting queries
-- attendance and grades examples
-- contact and communication related queries
-- operational data extracts
+## What I built
+I build queries designed to pull useful information with respect to Field Level Security, making system data easier to use and understand.
 
-## Notes
+## Tools I used
+SQL, relational databases, and reporting-oriented query logic.
 
-These files are shared as representative examples of SQL work. Some production context and data structures have been omitted or simplified.
+## Takeaways
+This work reflects my focus on building practical reporting solutions that support real users, real workflows, and better access to data.

@@ -1,13 +1,16 @@
-# Web Customizations
+# Web Dev
 
-This section includes front-end examples using JavaScript, jQuery, and AngularJS.
+## Focus
+This directory focuses on front-end and web-related development work.
 
-## What is included
+## Contents
+It contains selected examples of web pages, interface demos, and customization work using browser-based technologies.
 
-- AngularJS demos
-- jQuery examples
-- UI customization samples
+## What I built
+I build web-based examples and interface elements that explore layout, interaction, and user-facing functionality.
 
-## Notes
+## Tools I used
+HTML, CSS, JavaScript, jQuery, AngularJS, and related front-end tools.
 
-These files show front-end structure, interaction patterns, and interface customization work.
+## Takeaways
+This work reflects my interest in building interfaces that are functional, readable, and useful to the people working with them.

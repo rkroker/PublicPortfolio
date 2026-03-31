@@ -1,13 +1,16 @@
-# PowerSchool and Data Automation
+# PowerSchool Customs
 
-This section includes examples of PowerSchool-related customization and automation support work.
+## Focus
+This directory focuses on PowerSchool customization work related to usability, workflow support, and operational improvements.
 
-## What is included
+## Content
+It contains selected examples of page fragments, interface adjustments, validation support, and related customization work.
 
-- page fragment examples
-- UI customization samples
-- workflow support scripts
+## What I built
+I built customizations intended to improve user workflows, reduce confusion, and support more consistent data entry and system use.
 
-## Notes
+## Tools I used
+JavaScript, HTML, CSS, SQL, and PowerSchool page customization methods.
 
-These examples reflect the type of customization and operational support work I have done. Shared files are limited to safe sample material.
+## Takeaways
+This work reflects how I approach system customization with a focus on practical use, clarity, and impact.

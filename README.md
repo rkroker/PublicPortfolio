@@ -1,43 +1,41 @@
-# Ryan Kroker Portfolio
+# Ryan Kroker
 
-Portfolio of data, reporting, automation, and web customization work.
+Data, systems, and automation professional with experience in SQL, Python, reporting, PowerSchool customization, web development, and operational support.
 
-## About Me
+## What I Do
 
-I work at the intersection of data, systems, and operations. My background includes SQL reporting, Python, Flask, PowerSchool customization, data automation, integrations, and analytics delivery.
+I build practical solutions that improve data quality, reporting, automation, and user workflows. My work sits between technical systems and real operational needs.
 
-This portfolio highlights selected examples of my work, project samples, and technical experience.
+## Core Areas
 
-## Focus Areas
-
-- SQL and reporting
-- Python and data projects
-- Flask and application development
+- SQL reporting and data extraction
+- Python and Flask development
 - PowerSchool customization
-- Web customization using JavaScript, jQuery, and AngularJS
-- Automation and operational support
+- web development
+- automation and process improvement
+- analytics and operational support
+
+## Featured Work
+
+### Python & Flask Apps
+Scripts and applications built with Python and Flask, highlighting practical development and the use of supporting libraries to create real-world solutions.
+
+### PowerSchool Customs
+Examples of workflow support, page fragments, and SIS-related customization.
+
+### SQL Reporting
+Representative SQL work for reporting, visualization, and analysis.
+
+### Data Projects
+Selected notebooks and data-focused examples.
+
+### Web Dev
+AngularJS, jQuery, and front-end customization samples.
 
 ## Resume
 
 My resume is available in the `resume` folder.
 
-## Featured Project Areas
-
-### PowerSchool Customs
-Examples of PowerSchool-related customization, page fragments, and workflow support.
-
-### SQL Reporting
-Sample SQL work focused on reporting, operational visibility, and data extraction.
-
-### Data Projects
-Selected notebooks and Python-based work related to data analysis and learning projects.
-
-### Web Dev
-Front-end examples using Python, Flask, AngularJS, jQuery, and related tools.
-
-### Certifications and Capstones
-Artifacts from technical certificate programs and capstone work.
-
 ## Notes
 
-Some professional work is represented in a limited or sanitized form due to data sensitivity and employer considerations.
+Some work is shown in a limited or sanitized form due to data sensitivity and professional considerations.
