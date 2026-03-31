@@ -1,0 +1,6 @@
+Script Breakdown:
+- Controllers: Used to manage the logic and data binding for different parts of the application.
+- Services: Centralized data management and logic, promoting reusability.
+- Directives: Encapsulation of a task list, enabling reusability and clean templates.
+- Filters: Custom filter to filter tasks based on their status.
+- Form Validation: Basic form validation with AngularJS's built-in features.

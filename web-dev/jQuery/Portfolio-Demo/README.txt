@@ -1,0 +1,5 @@
+Scenario:
+Build a portfolio section where users can dynamically filter and display projects based on their category, and where clicking on a project displays more detailed information fetched from a remote server (simulated with a JSON object for demo purposes).
+
+Explanation:
+The script allows users to filter portfolio items by category using buttons. It demonstrates the use of event handling and conditional DOM manipulation. When a user clicks the "View Details" button, the script fetches project details from a simulated JSON object and dynamically inserts them into the page. This demonstrates knowledge of working with data objects, handling click events, and updating the DOM. The script also scrolls smoothly to the details section after loading the content, showcasing the use of animations ending in an improved user experience.

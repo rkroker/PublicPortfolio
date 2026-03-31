@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="portfolioApp">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Portfolio</title>
+    <link rel="stylesheet" href="styles.css">
+    <base href="/">
+</head>
+<body>
+
+    <!-- Navigation Bar -->
+    <nav>
+            <a href="#!/">Home</a>
+            <a href="#!/projects">Projects</a>
+            <a href="#!/contact">Contact</a>
+    </nav>
+
+    <!-- Main Content Area -->
+    <div ng-view></div>
+
+    <!-- AngularJS and Application Scripts -->
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.8.2/angular.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.8.2/angular-route.min.js"></script>
+    <script src="app/app.js"></script>
+    <script src="app/controllers.js"></script>
+    <script src="app/services.js"></script>
+    <script src="app/directives.js"></script>
+    <script src="app/filters.js"></script>
+</body>
+</html>

@@ -1,0 +1,76 @@
+<!--
+<div>
+    <form ng-submit="addTask()">
+        <input type="text" ng-model="newTask.title" placeholder="Task Title" required />
+        <select ng-model="newTask.status">
+            <option value="Pending">Pending</option>
+            <option value="In Progress">In Progress</option>
+            <option value="Completed">Completed</option>
+        </select>
+        <button type="submit">Add Task</button>
+    </form>
+
+    <div class="task" ng-repeat="task in tasks | statusFilter:'Pending'">
+        <div ng-if="!task.isEditing">
+            <h3>{{task.title}}</h3>
+            <p>Status: {{task.status}}</p>
+            <button ng-click="editTask(task)">Edit</button>
+            <button ng-click="deleteTask(task)">Delete</button>
+        </div>
+
+        <div ng-if="task.isEditing">
+            <input type="text" ng-model="task.title" />
+            <select ng-model="task.status">
+                <option value="Pending">Pending</option>
+                <option value="In Progress">In Progress</option>
+                <option value="Completed">Completed</option>
+            </select>
+            <button ng-click="saveTask(task)">Save</button>
+        </div>
+    </div>
+</div>
+-->
+
+<div>
+    <form ng-submit="addTask()">
+        <input type="text" ng-model="newTask.title" placeholder="Task Title" required />
+        <select ng-model="newTask.status">
+            <option value="Pending">Pending</option>
+            <option value="In Progress">In Progress</option>
+            <option value="Completed">Completed</option>
+        </select>
+        <button type="submit">Add Task</button>
+    </form>
+
+    <!-- Status filter dropdown -->
+    <div>
+        <label for="statusFilter">Show tasks with status:</label>
+        <select id="statusFilter" ng-model="selectedStatus">
+            <option value="">All</option>
+            <option value="Pending">Pending</option>
+            <option value="In Progress">In Progress</option>
+            <option value="Completed">Completed</option>
+        </select>
+    </div>
+
+    <!-- Task list -->
+    <div class="task" ng-repeat="task in tasks | statusFilter:selectedStatus">
+        <div ng-if="!task.isEditing">
+            <h3>{{task.title}}</h3>
+            <p>Status: {{task.status}}</p>
+            <button ng-click="editTask(task)">Edit</button>
+            <button ng-click="deleteTask(task)">Delete</button>
+        </div>
+
+        <div ng-if="task.isEditing">
+            <input type="text" ng-model="task.title" />
+            <select ng-model="task.status">
+                <option value="Pending">Pending</option>
+                <option value="In Progress">In Progress</option>
+                <option value="Completed">Completed</option>
+            </select>
+            <button ng-click="saveTask(task)">Save</button>
+        </div>
+    </div>
+</div>
+
