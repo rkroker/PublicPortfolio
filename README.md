@@ -34,7 +34,7 @@ AngularJS, jQuery, and front-end customization samples.
 
 ## Resume
 
-My [Resume](https://github.com/rkroker/portfolio/blob/main/resume/2026%20RKroker%20Resume.docx) is available in the `resume` folder.
+My [Resume](https://github.com/rkroker/portfolio/blob/main/resume/2026%20RKroker%20Resume.pdf) is available in the `resume` folder.
 
 ## Notes
 
