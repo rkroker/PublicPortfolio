@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="taskManagerApp">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Task Manager</title>
+    <link rel="stylesheet" href="styles/styles.css">
+</head>
+<body>
+    <div class="container" ng-controller="MainController">
+        <h1>Task Manager</h1>
+        <task-list></task-list>
+    </div>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.8.2/angular.min.js"></script>
+    <script src="app.js"></script>
+    <script src="controllers/mainController.js"></script>
+    <script src="controllers/taskController.js"></script>
+    <script src="services/taskService.js"></script>
+    <script src="directives/taskDirective.js"></script>
+    <script src="filters/statusFilter.js"></script>
+</body>
+</html>

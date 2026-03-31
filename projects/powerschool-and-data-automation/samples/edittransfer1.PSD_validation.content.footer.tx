@@ -1,0 +1,119 @@
+<style>
+  .ps-highlight-yellow td {
+    background: #fff3a0 !important;
+  }
+
+  .ps-highlight-green td {
+    background: #cfeecf !important;
+  }
+
+  .ps-highlight-yellow td:first-child,
+  .ps-highlight-green td:first-child {
+    font-weight: 700;
+  }
+
+  .ps-highlight-yellow select,
+  .ps-highlight-yellow input,
+  .ps-highlight-yellow textarea,
+  .ps-highlight-green select,
+  .ps-highlight-green input,
+  .ps-highlight-green textarea {
+    border: 2px solid rgba(0,0,0,.35) !important;
+    box-shadow: 0 0 0 1px rgba(0,0,0,.08);
+  }
+
+  .ps-highlight-note {
+    display: inline-block;
+    margin-left: 8px;
+    padding: 1px 6px;
+    border-radius: 10px;
+    font-size: 11px;
+    line-height: 1.4;
+    vertical-align: middle;
+    background: rgba(0,0,0,.08);
+  }
+</style>
+
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+  function normalizeText(text) {
+    return (text || '')
+      .replace(/\s+/g, ' ')
+      .replace(/\u00a0/g, ' ')
+      .trim()
+      .toLowerCase();
+  }
+
+  function addBadge(labelCell, text) {
+    if (!labelCell || labelCell.querySelector('.ps-highlight-note')) return;
+    var badge = document.createElement('span');
+    badge.className = 'ps-highlight-note';
+    badge.textContent = text;
+    labelCell.appendChild(badge);
+  }
+
+  function highlightRow(row, cssClass, badgeText) {
+    if (!row) return;
+    row.classList.add(cssClass);
+
+    var labelCell = row.querySelector('td:first-child');
+    if (labelCell && badgeText) {
+      addBadge(labelCell, badgeText);
+    }
+  }
+
+  function findRowByFieldId(fieldId) {
+    var field = document.getElementById(fieldId);
+    if (!field) return null;
+    return field.closest('tr');
+  }
+
+  function findRowByLabelText(targetText) {
+    var target = normalizeText(targetText);
+
+    // Search all table rows, not just the main linkDescList table
+    var rows = document.querySelectorAll('tr');
+
+    for (var i = 0; i < rows.length; i++) {
+      var firstCell = rows[i].querySelector('td:first-child');
+      if (!firstCell) continue;
+
+      var cellText = normalizeText(firstCell.textContent);
+
+      if (cellText.indexOf(target) !== -1) {
+        return rows[i];
+      }
+    }
+
+    return null;
+  }
+
+  function applyHighlights() {
+    var yellowRows = [];
+    var greenRows = [];
+
+    // Base page IDs
+    yellowRows.push(findRowByFieldId('selectEntryCode'));
+    yellowRows.push(findRowByFieldId('selectExitCode'));
+
+    // State-specific fields by partial label text
+    yellowRows.push(findRowByLabelText('field 7. school enrollment template exit code override'));
+    yellowRows.push(findRowByLabelText('field 65. graduation status code'));
+
+    greenRows.push(findRowByLabelText('is this student a summer withdrawal'));
+    greenRows.push(findRowByLabelText('field 90. student mobility'));
+
+    yellowRows.forEach(function (row) {
+      highlightRow(row, 'ps-highlight-yellow', 'Required');
+    });
+
+    greenRows.forEach(function (row) {
+      highlightRow(row, 'ps-highlight-green', 'Summer Withdrawals (Field 90) ');
+    });
+  }
+
+  applyHighlights();
+  setTimeout(applyHighlights, 300);
+  setTimeout(applyHighlights, 1000);
+});
+</script>

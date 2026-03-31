@@ -1,0 +1,13 @@
+.home {
+    text-align: center;
+}
+
+.projects, .contact {
+    margin: 20px;
+}
+
+.project-card {
+    border: 1px solid #ddd;
+    padding: 10px;
+    margin-bottom: 10px;
+}
