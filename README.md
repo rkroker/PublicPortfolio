@@ -23,17 +23,17 @@ My resume is available in the `resume` folder.
 
 ## Featured Project Areas
 
-### PowerSchool and Data Automation
+### PowerSchool Customs
 Examples of PowerSchool-related customization, page fragments, and workflow support.
 
 ### SQL Reporting
 Sample SQL work focused on reporting, operational visibility, and data extraction.
 
-### Python Data Projects
+### Data Projects
 Selected notebooks and Python-based work related to data analysis and learning projects.
 
-### Web Customizations
-Front-end examples using AngularJS, jQuery, and related tools.
+### Web Dev
+Front-end examples using Python, Flask, AngularJS, jQuery, and related tools.
 
 ### Certifications and Capstones
 Artifacts from technical certificate programs and capstone work.
