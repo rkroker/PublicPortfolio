@@ -1,0 +1,131 @@
+<!--
+Author: Ryan Kroker (ryan.kroker@gmail.com)
+Version: 1.0
+Created: 3-30-2026
+Last Updated: 4-2-2026
+Purpose: Displays finalized run details, logged exceptions, and available export actions.
+-->
+
+{% extends "base.html" %}
+
+{% block title %}Run Detail{% endblock %}
+
+{% block content %}
+    <h2>Run Detail</h2>
+
+    <p><strong>Run ID:</strong> {{ run.id }}</p>
+    <p><strong>Created At:</strong> {{ run.created_at|datetime_local }}</p>
+    <p><strong>Status:</strong> {{ run.status }}</p>
+    <p><strong>Send Mode:</strong> {{ run.send_mode }}</p>
+    <p><strong>Total Notifications:</strong> {{ run.total_notifications }}</p>
+    <p><strong>Total Exceptions:</strong> {{ exceptions|length }}</p>
+
+    <p>
+        <a class="action-link" href="{{ url_for('main.run_preview', run_id=run.id) }}">Open Pre-Send Preview</a>
+        <a class="action-link" href="{{ url_for('main.history') }}">Back to History</a>
+        <a class="action-link neutral-button" href="{{ url_for('main.export_run_csv', run_id=run.id) }}">Export Run as CSV</a>
+        <a class="action-link neutral-button" href="{{ url_for('main.export_run_exceptions_csv', run_id=run.id) }}">Export Exceptions as CSV</a>
+    </p>
+
+    <hr>
+
+    <h3>Run Summary</h3>
+
+    <h3>Notification Types</h3>
+
+    {% if summary.notification_type_counts %}
+        <table>
+            <thead>
+                <tr>
+                    <th>Notification Type</th>
+                    <th>Count</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for notification_type, count in summary.notification_type_counts.items() %}
+                    <tr>
+                        <td>{{ notification_type }}</td>
+                        <td>{{ count }}</td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    {% else %}
+        <p>No notification types found for this run.</p>
+    {% endif %}
+
+    <table>
+        <tbody>
+            <tr>
+                <th>Unique Students Notified</th>
+                <td>{{ summary.unique_students }}</td>
+            </tr>
+            <tr>
+                <th>Unique Activities</th>
+                <td>{{ summary.unique_activities }}</td>
+            </tr>
+            <tr>
+                <th>Unique Teachers CCed</th>
+                <td>{{ summary.unique_teacher_emails }}</td>
+            </tr>
+            <tr>
+                <th>Unique Advisors CCed</th>
+                <td>{{ summary.unique_advisor_emails }}</td>
+            </tr>
+            <tr>
+                <th>Total Failing Course Entries</th>
+                <td>{{ summary.total_failing_courses }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <h3>Activity Coverage</h3>
+
+    {% if summary.activity_student_counts %}
+        <table>
+            <thead>
+                <tr>
+                    <th>Activity</th>
+                    <th>Students Impacted</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for activity, count in summary.activity_student_counts.items() %}
+                    <tr>
+                        <td>{{ activity }}</td>
+                        <td>{{ count }}</td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    {% else %}
+        <p>No activities found for this run.</p>
+    {% endif %}
+
+    <h3>Exceptions</h3>
+
+    {% if exceptions %}
+        <table>
+            <thead>
+                <tr>
+                    <th>Issue Type</th>
+                    <th>Record Type</th>
+                    <th>Record Key</th>
+                    <th>Details</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for item in exceptions %}
+                    <tr>
+                        <td>{{ item.issue_type }}</td>
+                        <td>{{ item.record_type }}</td>
+                        <td>{{ item.record_key or "None" }}</td>
+                        <td>{{ item.details }}</td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    {% else %}
+        <p>No exceptions found for this run.</p>
+    {% endif %}
+{% endblock %}

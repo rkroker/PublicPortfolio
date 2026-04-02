@@ -1,0 +1,103 @@
+<!--
+Author: Ryan Kroker (ryan.kroker@gmail.com)
+Version: 1.0
+Created: 3-27-2026
+Last Updated: 4-2-2026
+Purpose: Displays saved run history with filters, summary details, and links to finalized results.
+-->
+
+{% extends "base.html" %}
+
+{% block title %}History{% endblock %}
+
+{% block content %}
+    <h2>Run History</h2>
+
+    <form method="get" class="filter-form">
+        <div class="filter-row">
+            <div class="form-group filter-group">
+                <label for="q">Search</label><br>
+                <input type="text" id="q" name="q" value="{{ q }}" placeholder="Run ID, status, or send mode">
+            </div>
+
+            <div class="form-group filter-group">
+                <label for="status">Status</label><br>
+                <select id="status" name="status">
+                    {% for option in status_options %}
+                        <option value="{{ option }}" {% if option == status_filter %}selected{% endif %}>
+                            {{ option if option else "All Statuses" }}
+                        </option>
+                    {% endfor %}
+                </select>
+            </div>
+
+            <div class="form-group filter-group">
+                <label for="send_mode">Send Mode</label><br>
+                <select id="send_mode" name="send_mode">
+                    {% for option in send_mode_options %}
+                        <option value="{{ option }}" {% if option == send_mode_filter %}selected{% endif %}>
+                            {{ option if option else "All Send Modes" }}
+                        </option>
+                    {% endfor %}
+                </select>
+            </div>
+        </div>
+
+        <div class="filter-row">
+            <div class="form-group filter-group">
+                <label for="date_from">Created From</label><br>
+                <input type="date" id="date_from" name="date_from" value="{{ date_from }}">
+            </div>
+
+            <div class="form-group filter-group">
+                <label for="date_to">Created To</label><br>
+                <input type="date" id="date_to" name="date_to" value="{{ date_to }}">
+            </div>
+
+            <div class="form-group filter-group">
+                <label for="has_exceptions">Has Exceptions</label><br>
+                <select id="has_exceptions" name="has_exceptions">
+                    {% for option in has_exceptions_options %}
+                        <option value="{{ option }}" {% if option == has_exceptions %}selected{% endif %}>
+                            {% if option == "" %}All{% elif option == "yes" %}Yes{% else %}No{% endif %}
+                        </option>
+                    {% endfor %}
+                </select>
+            </div>
+        </div>
+
+        <div class="filter-actions">
+            <button type="submit" class="action-button">Apply Filters</button>
+            <a class="action-link neutral-button" href="{{ url_for('main.history') }}">Clear</a>
+        </div>
+    </form>
+
+    {% if runs %}
+        <table>
+            <thead>
+                <tr>
+                    <th>Run ID</th>
+                    <th>Created At</th>
+                    <th>Status</th>
+                    <th>Send Mode</th>
+                    <th>Total Notifications</th>
+                    <th>Total Exceptions</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for run in runs %}
+                    <tr>
+                        <td><a href="{{ url_for('main.run_detail', run_id=run.id) }}">{{ run.id }}</a></td>
+                        <td>{{ run.created_at|datetime_local }}</td>
+                        <td>{{ run.status }}</td>
+                        <td>{{ run.send_mode }}</td>
+                        <td>{{ run.total_notifications }}</td>
+                        <td>{{ run.total_exceptions }}</td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    {% else %}
+        <p>No runs matched your search or filters.</p>
+    {% endif %}
+{% endblock %}

@@ -1,0 +1,138 @@
+<!--
+Author: Ryan Kroker (ryan.kroker@gmail.com)
+Version: 1.0
+Created: 3-25-2026
+Last Updated: 4-2-2026
+Purpose: Displays file validation results, business rule feedback, and next step actions.
+-->
+
+{% extends "base.html" %}
+
+{% block title %}Validation Review{% endblock %}
+
+{% block content %}
+    <h2>Validation Review</h2>
+
+    {% if uploaded_files %}
+        <p>The files were uploaded successfully.</p>
+
+        <ul>
+            <li><strong>Student Activity File:</strong> {{ uploaded_files.student_activity_file }}</li>
+            <li><strong>Staff Activity File:</strong> {{ uploaded_files.staff_activity_file }}</li>
+            <li><strong>Current Grades File:</strong> {{ uploaded_files.current_grades_file }}</li>
+        </ul>
+    {% endif %}
+
+    {% if structure_results %}
+        <h3>Structure Validation</h3>
+
+        <table>
+            <thead>
+                <tr>
+                    <th>File Type</th>
+                    <th>Valid</th>
+                    <th>Rows</th>
+                    <th>Columns</th>
+                    <th>Empty File</th>
+                    <th>Missing Columns</th>
+                    <th>Error</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for file_type, result in structure_results.items() %}
+                    <tr>
+                        <td>{{ file_type }}</td>
+                        <td>{{ "Yes" if result.valid else "No" }}</td>
+                        <td>{{ result.row_count }}</td>
+                        <td>{{ result.column_count }}</td>
+                        <td>{{ "Yes" if result.is_empty else "No" }}</td>
+                        <td>
+                            {% if result.missing_columns %}
+                                {{ result.missing_columns | join(", ") }}
+                            {% else %}
+                                None
+                            {% endif %}
+                        </td>
+                        <td>{{ result.error if result.error else "None" }}</td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    {% endif %}
+
+    {% if business_results %}
+        <h3>Business Validation Summary</h3>
+
+        <p><strong>Qualifying Students:</strong> {{ business_results.qualifying_student_count }}</p>
+        <p><strong>Blocking Issues:</strong> {{ business_results.blocking_issues|length }}</p>
+        <p><strong>Warnings:</strong> {{ business_results.warnings|length }}</p>
+        <p><strong>Ready to Finalize:</strong> {{ "Yes" if business_results.can_finalize else "No" }}</p>
+
+        <h3>Blocking Issues</h3>
+        {% if business_results.blocking_issues %}
+            <table>
+                <thead>
+                    <tr>
+                        <th>Issue Type</th>
+                        <th>Record Type</th>
+                        <th>Record Key</th>
+                        <th>Details</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for item in business_results.blocking_issues %}
+                        <tr>
+                            <td>{{ item.issue_type }}</td>
+                            <td>{{ item.record_type }}</td>
+                            <td>{{ item.record_key or "None" }}</td>
+                            <td>{{ item.details }}</td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        {% else %}
+            <p>No blocking issues were found.</p>
+        {% endif %}
+
+        <h3>Warnings</h3>
+        {% if business_results.warnings %}
+            <table>
+                <thead>
+                    <tr>
+                        <th>Issue Type</th>
+                        <th>Record Type</th>
+                        <th>Record Key</th>
+                        <th>Details</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for item in business_results.warnings %}
+                        <tr>
+                            <td>{{ item.issue_type }}</td>
+                            <td>{{ item.record_type }}</td>
+                            <td>{{ item.record_key or "None" }}</td>
+                            <td>{{ item.details }}</td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        {% else %}
+            <p>No warnings were found.</p>
+        {% endif %}
+
+        {% if business_results.can_finalize %}
+            <p><strong>This upload passed validation and is ready for the finalize step.</strong></p>
+
+            <form method="post" action="{{ url_for('main.finalize') }}">
+                {{ finalize_form.hidden_tag() }}
+                {{ finalize_form.submit() }}
+            </form>
+        {% else %}
+            <p><strong>Correct the blocking issues in the source files and reupload before continuing.</strong></p>
+        {% endif %}
+    {% endif %}
+
+    {% if not uploaded_files and not structure_results and not business_results %}
+        <p>Upload files to review structure and business validation results.</p>
+    {% endif %}
+{% endblock %}

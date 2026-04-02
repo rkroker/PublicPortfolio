@@ -1,0 +1,152 @@
+<!--
+Author: Ryan Kroker (ryan.kroker@gmail.com)
+Version: 1.0
+Created: 3-30-2026
+Last Updated: 4-2-2026
+Purpose: Displays the pre-send review screen for notifications and available send actions.
+-->
+
+{% extends "base.html" %}
+
+{% block title %}Pre-Send Preview{% endblock %}
+
+{% block content %}
+    <h2>Pre-Send Preview</h2>
+
+    <p><strong>Run ID:</strong> {{ run.id }}</p>
+    <p><strong>Created At:</strong> {{ run.created_at|datetime_local }}</p>
+    <p><strong>Status:</strong> {{ run.status }}</p>
+    <p><strong>Send Mode:</strong> {{ run.send_mode }}</p>
+    <p><strong>Total Notifications:</strong> {{ notifications|length }}</p>
+    <p><strong>Pending Notifications:</strong> {{ pending_count }}</p>
+    <p><strong>Failed Test Notifications:</strong> {{ failed_test_count }}</p>
+    <p><strong>Live Sent Notifications:</strong> {{ sent_live_count }}</p>
+
+    <p><strong>Available Send Paths:</strong> Test Mode and Live Mode</p>
+
+    <div class="action-bar">
+        <a class="action-link" href="{{ url_for('main.run_detail', run_id=run.id) }}">Back to Run Detail</a>
+        <a class="action-link" href="{{ url_for('main.history') }}">Back to History</a>
+
+        {% if pending_count > 0 %}
+            <form method="post" action="{{ url_for('main.send_test_run', run_id=run.id) }}" class="inline-form">
+                {{ send_form.hidden_tag() }}
+                {{ send_form.submit(class_="action-button neutral-button") }}
+            </form>
+        {% endif %}
+
+        {% if failed_test_count > 0 %}
+            <form method="post" action="{{ url_for('main.retry_failed_test_run', run_id=run.id) }}" class="inline-form">
+                {{ send_form.hidden_tag() }}
+                <button type="submit" class="action-button">Retry Failed Test Send</button>
+            </form>
+        {% endif %}
+
+        {% if sent_live_count == 0 %}
+            <button type="button" class="action-button danger-button" id="openLiveSendModal">Send Run Live</button>
+        {% endif %}
+    </div>
+
+    {% if sent_live_count > 0 %}
+        <p><strong>This run has already been sent live.</strong></p>
+    {% endif %}
+
+    {% if pending_count == 0 and failed_test_count == 0 and sent_live_count == 0 %}
+        <p><strong>No pending or failed test notifications remain for this run.</strong></p>
+    {% endif %}
+
+    <div class="modal-overlay hidden" id="liveSendModal">
+        <div class="modal-panel">
+            <h3>Confirm Live Send</h3>
+
+            <p>This action will send real emails to students and real CC recipients.</p>
+            <p>Enter the <strong>Live Send Password</strong> in the confirmation box to continue.</p>
+
+            <form method="post" action="{{ url_for('main.send_live_run', run_id=run.id) }}">
+                {{ live_form.hidden_tag() }}
+
+            <div class="form-group">
+                <label for="{{ live_form.confirmation_text.id }}">Confirmation Code: </label>
+                {{ live_form.confirmation_text() }}
+            </div>
+
+                <div class="modal-actions">
+                    <button type="button" class="action-button secondary-button" id="closeLiveSendModal">Cancel</button>
+                    {{ live_form.submit(class_="action-button danger-button") }}
+                </div>
+            </form>
+        </div>
+    </div>
+
+    {% if notifications %}
+        {% for notification in notifications %}
+            <div class="notification-card">
+                <h4>{{ notification.recipient_name }}{% if notification.recipient_identifier %} ({{ notification.recipient_identifier }}){% endif %}</h4>
+
+                <p><strong>Notification Type:</strong> {{ notification.notification_type }}</p>
+                <p><strong>Recipient Type:</strong> {{ notification.recipient_type }}</p>
+                <p><strong>To:</strong> {{ notification.to_email }}</p>
+                <p><strong>CC:</strong> {{ notification.cc_emails | join(", ") if notification.cc_emails else "None" }}</p>
+                <p><strong>Subject:</strong> {{ notification.subject }}</p>
+                <p><strong>Send Status:</strong> {{ notification.send_status }}</p>
+                <p><strong>Send Mode:</strong> {{ notification.send_mode }}</p>
+                <p><strong>Sent At:</strong> {{ notification.sent_at|datetime_local if notification.sent_at else "Not sent yet" }}</p>
+
+                {% if notification.error_message %}
+                    <p><strong>Error:</strong> {{ notification.error_message }}</p>
+                {% endif %}
+
+                {% if notification.activity_names %}
+                    <p><strong>Activities:</strong></p>
+                    <ul>
+                        {% for activity in notification.activity_names %}
+                            <li>{{ activity }}</li>
+                        {% endfor %}
+                    </ul>
+                {% endif %}
+
+                <p><strong>Failing Courses:</strong></p>
+                <ul>
+                    {% for course in notification.failing_courses %}
+                        <li>{{ course.course_name }}: {{ course.current_grade }} ({{ course.teacher_name }})</li>
+                    {% endfor %}
+                </ul>
+
+                <details>
+                    <summary>Preview Email Body</summary>
+                    <pre>{{ notification.body }}</pre>
+                </details>
+            </div>
+        {% endfor %}
+    {% else %}
+        <p>No notifications are available for this run.</p>
+    {% endif %}
+
+    <script>
+        (function () {
+            const modal = document.getElementById("liveSendModal");
+            const openButton = document.getElementById("openLiveSendModal");
+            const closeButton = document.getElementById("closeLiveSendModal");
+
+            if (openButton && modal) {
+                openButton.addEventListener("click", function () {
+                    modal.classList.remove("hidden");
+                });
+            }
+
+            if (closeButton && modal) {
+                closeButton.addEventListener("click", function () {
+                    modal.classList.add("hidden");
+                });
+            }
+
+            if (modal) {
+                modal.addEventListener("click", function (event) {
+                    if (event.target === modal) {
+                        modal.classList.add("hidden");
+                    }
+                });
+            }
+        })();
+    </script>
+{% endblock %}

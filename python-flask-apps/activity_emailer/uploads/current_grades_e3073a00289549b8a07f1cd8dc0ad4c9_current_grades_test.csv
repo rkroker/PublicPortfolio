@@ -1,0 +1,9 @@
+student_id,student_name,course_name,current_grade,teacher_name,teacher_email
+1001,Alex Carter,Algebra I,62,Jane Smith,jsmith@school.org
+1001,Alex Carter,Biology,78,Mark Jones,mjones@school.org
+1002,Brooke Lee,English 10,65,Sarah Brown,sbrown@school.org
+1002,Brooke Lee,World History,88,Tom Clark,tclark@school.org
+1003,Chris Adams,Chemistry,60,Lori White,lwhite@school.org
+1004,Diego Martinez,Geometry,INC,Emily Green,egreen@school.org
+1005,Emma Johnson,Spanish II,64,Carlos Rivera,crivera@school.org
+1005,Emma Johnson,Physics,65,Priya Desai,pdesai@school.org

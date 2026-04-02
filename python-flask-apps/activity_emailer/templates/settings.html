@@ -1,0 +1,206 @@
+<!--
+Author: Ryan Kroker (ryan.kroker@gmail.com)
+Version: 1.0
+Created: 3-30-2026
+Last Updated: 4-2-2026
+Purpose: Displays the settings interface for email delivery, safeguards, and template content.
+-->
+
+{% extends "base.html" %}
+
+{% block title %}Settings{% endblock %}
+
+{% block content %}
+    <h2>Settings</h2>
+
+    <div class="tabs">
+        <div class="tab-buttons" role="tablist">
+            <button
+                type="button"
+                class="tab-button {% if active_tab == 'email' %}active{% endif %}"
+                data-tab="email"
+                role="tab"
+                aria-selected="{{ 'true' if active_tab == 'email' else 'false' }}"
+            >
+                Email Delivery
+            </button>
+
+            <button
+                type="button"
+                class="tab-button {% if active_tab == 'safeguard' %}active{% endif %}"
+                data-tab="safeguard"
+                role="tab"
+                aria-selected="{{ 'true' if active_tab == 'safeguard' else 'false' }}"
+            >
+                Live Send Safeguard
+            </button>
+
+            <button
+                type="button"
+                class="tab-button {% if active_tab == 'template' %}active{% endif %}"
+                data-tab="template"
+                role="tab"
+                aria-selected="{{ 'true' if active_tab == 'template' else 'false' }}"
+            >
+                Email Template
+            </button>
+        </div>
+
+        <div
+            class="tab-panel {% if active_tab == 'email' %}active{% endif %}"
+            id="tab-panel-email"
+            data-panel="email"
+            role="tabpanel"
+        >
+            <section class="settings-section">
+                <h3>Email Delivery Settings</h3>
+                <div class="settings-status-box status-{{ settings_status.email_test_status }}">
+                    <p><strong>Last Test Status:</strong> {{ settings_status.email_test_status.replace('_', ' ')|title }}</p>
+                    <p><strong>Last Tested At:</strong>
+                        {% if settings_status.email_tested_at %}
+                            {{ settings_status.email_tested_at|datetime_local }}
+                        {% else %}
+                            Not tested yet
+                        {% endif %}
+                    </p>
+                    <p><strong>Last Test Recipient:</strong> {{ settings_status.email_test_recipient if settings_status.email_test_recipient else "None" }}</p>
+                    <p><strong>Last Result:</strong> {{ settings_status.email_test_message if settings_status.email_test_message else "No test result available." }}</p>
+                </div>
+                <form method="post">
+                    {{ email_form.hidden_tag() }}
+
+                    <div class="form-group">
+                        {{ email_form.mail_server.label }}<br>
+                        {{ email_form.mail_server(size=50) }}
+                    </div>
+
+                    <div class="form-group">
+                        {{ email_form.mail_port.label }}<br>
+                        {{ email_form.mail_port() }}
+                    </div>
+
+                    <div class="form-group">
+                        {{ email_form.mail_use_tls() }}
+                        {{ email_form.mail_use_tls.label }}
+                    </div>
+
+                    <div class="form-group">
+                        {{ email_form.mail_username.label }}<br>
+                        {{ email_form.mail_username(size=50) }}
+                    </div>
+
+                    <div class="form-group">
+                        {{ email_form.mail_password.label }}<br>
+                        {{ email_form.mail_password(size=50) }}
+                    </div>
+
+                    <div class="form-group">
+                        {{ email_form.mail_from.label }}<br>
+                        {{ email_form.mail_from(size=50) }}
+                    </div>
+
+                    <div class="form-group">
+                        {{ email_form.test_email_recipient.label }}<br>
+                        {{ email_form.test_email_recipient(size=50) }}
+                    </div>
+
+                    <div class="form-group action-bar">
+                        {{ email_form.submit_email(class_="action-button") }}
+                        {{ email_form.test_email(class_="action-button neutral-button") }}
+                    </div>
+                </form>
+            </section>
+        </div>
+
+        <div
+            class="tab-panel {% if active_tab == 'safeguard' %}active{% endif %}"
+            id="tab-panel-safeguard"
+            data-panel="safeguard"
+            role="tabpanel"
+        >
+            <section class="settings-section">
+                <h3>Live Send Safeguard</h3>
+
+                <form method="post">
+                    {{ safeguard_form.hidden_tag() }}
+
+                    <div class="form-group">
+                        {{ safeguard_form.live_send_password.label }}<br>
+                        {{ safeguard_form.live_send_password(size=40) }}
+                    </div>
+
+                    <div class="form-group">
+                        {{ safeguard_form.submit_safeguard(class_="action-button") }}
+                    </div>
+                </form>
+            </section>
+        </div>
+
+        <div
+            class="tab-panel {% if active_tab == 'template' %}active{% endif %}"
+            id="tab-panel-template"
+            data-panel="template"
+            role="tabpanel"
+        >
+            <section class="settings-section">
+                <h3>Email Template</h3>
+
+                <p>Available placeholders:</p>
+                <ul>
+                    <li><code>{{ '{{ student_name }}' }}</code></li>
+                    <li><code>{{ '{{ failing_courses }}' }}</code></li>
+                    <li><code>{{ '{{ activities }}' }}</code></li>
+                </ul>
+
+                <form method="post">
+                    {{ template_form.hidden_tag() }}
+
+                    <div class="form-group">
+                        {{ template_form.default_email_subject.label }}<br>
+                        {{ template_form.default_email_subject(size=80) }}
+                    </div>
+
+                    <div class="form-group">
+                        {{ template_form.default_email_body.label }}<br>
+                        {{ template_form.default_email_body(rows=16, cols=90) }}
+                    </div>
+
+                    <div class="form-group action-bar">
+                        {{ template_form.submit_template(class_="action-button") }}
+                        {{ template_form.reset_template(class_="action-button neutral-button") }}
+                    </div>
+                </form>
+            </section>
+        </div>
+    </div>
+
+    <script>
+        (function () {
+            const tabButtons = document.querySelectorAll(".tab-button");
+            const tabPanels = document.querySelectorAll(".tab-panel");
+
+            function setActiveTab(tabName) {
+                tabButtons.forEach((button) => {
+                    const isActive = button.dataset.tab === tabName;
+                    button.classList.toggle("active", isActive);
+                    button.setAttribute("aria-selected", isActive ? "true" : "false");
+                });
+
+                tabPanels.forEach((panel) => {
+                    const isActive = panel.dataset.panel === tabName;
+                    panel.classList.toggle("active", isActive);
+                });
+
+                const url = new URL(window.location);
+                url.searchParams.set("tab", tabName);
+                window.history.replaceState({}, "", url);
+            }
+
+            tabButtons.forEach((button) => {
+                button.addEventListener("click", function () {
+                    setActiveTab(button.dataset.tab);
+                });
+            });
+        })();
+    </script>
+{% endblock %}
